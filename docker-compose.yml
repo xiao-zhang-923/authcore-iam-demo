@@ -1,0 +1,47 @@
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123456}
+      MYSQL_DATABASE: ${DB_NAME:-authcore_iam}
+      MYSQL_USER: ${DB_USER:-authcore}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-authcore123}
+    ports:
+      - "${MYSQL_PORT:-3307}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  app:
+    image: zhangquiet/authcore-iam:1.0.0
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"  # 前端
+      - "${BACKEND_PORT:-3001}:3001"   # 后端API
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # 数据库配置
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-authcore_iam}
+      DB_USER: ${DB_USER:-authcore}
+      DB_PASSWORD: ${DB_PASSWORD:-authcore123}
+      
+      # 应用配置
+      JWT_SECRET: ${JWT_SECRET:-your-jwt-secret-here}
+      NODE_ENV: ${NODE_ENV:-production}
+      
+      # 邮件配置
+      SMTP_HOST: ${SMTP_HOST:-smtp.example.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-your-email@example.com}
+      SMTP_PASS: ${SMTP_PASS:-your-email-password}
+      SMTP_FROM: ${SMTP_FROM:-"AuthCore IAM" <your-email@example.com>}
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
