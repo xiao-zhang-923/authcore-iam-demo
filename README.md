@@ -88,7 +88,7 @@ cp .env.example .env
 使用 Docker Compose 启动所有服务：
 
 ```bash
-docker-compose up -d
+docker-compose up -d || docker compose logs app | grep -i mail
 ```
 
 ### 3. 访问应用
@@ -99,7 +99,7 @@ docker-compose up -d
 ### 4. 停止服务
 
 ```bash
-docker-compose down
+docker-compose down || docker compose down
 ```
 
 ## 环境变量说明
@@ -167,7 +167,7 @@ SMTP_FROM=your_email@163.com
 
 ```bash
 # 查看应用容器的环境变量
-docker-compose exec app env | grep -E "(SMTP|DB|JWT)"
+docker-compose exec app env | grep -E "(SMTP|DB|JWT)" || docker compose exec app env | grep -E "(SMTP|DB|JWT)"
 ```
 
 ### 验证邮件配置
@@ -175,7 +175,7 @@ docker-compose exec app env | grep -E "(SMTP|DB|JWT)"
 #### 方法1：查看容器日志
 ```bash
 # 查看应用容器日志，寻找邮件相关的错误信息
-docker-compose logs app | grep -i mail
+docker-compose logs app | grep -i mail || docker compose logs app | grep -i mail
 ```
 
 #### 方法2：进入容器手动测试
@@ -262,15 +262,15 @@ nc -zv smtp.163.com 587
 ### 容器启动失败
 ```bash
 # 查看所有容器状态
-docker-compose ps
+docker-compose ps || docker compose up -d
 
 # 查看特定容器日志
-docker-compose logs app
-docker-compose logs mysql
+docker-compose logs app || docker compose logs app
+docker-compose logs mysql || docker compose logs mysql
 
 # 重新构建并启动
-docker-compose down
-docker-compose up -d --force-recreate
+docker-compose down || docker compose down
+docker-compose up -d --force-recreate || docker compose up -d --force-recreate
 ```
 
 

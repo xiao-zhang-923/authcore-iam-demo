@@ -41,6 +41,17 @@ services:
       SMTP_USER: ${SMTP_USER:-your-email@example.com}
       SMTP_PASS: ${SMTP_PASS:-your-email-password}
       SMTP_FROM: ${SMTP_FROM:-"AuthCore IAM" <your-email@example.com>}
+
+      # 超级管理员配置
+      SUPER_ADMIN_USERNAME: ${SUPER_ADMIN_USERNAME:-admin}
+      SUPER_ADMIN_EMAIL: ${SUPER_ADMIN_EMAIL:-your-email@example.com}
+      SUPER_ADMIN_PASSWORD: ${SUPER_ADMIN_PASSWORD:-your-email-password}
+      SUPER_ADMIN_DISPLAY_NAME: ${SUPER_ADMIN_DISPLAY_NAME:-your-name}
+
+      # 默认组织配置
+      DEFAULT_ORG_NAME: ${DEFAULT_ORG_NAME:-org-name}
+      DEFAULT_ORG_CODE: ${DEFAULT_ORG_CODE:-org-code}
+      DEFAULT_ORG_DESCRIPTION: ${DEFAULT_ORG_DESCRIPTION:-org-description}
     restart: unless-stopped
 
 volumes:
