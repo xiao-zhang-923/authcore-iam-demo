@@ -94,7 +94,7 @@ cp .env.example .env
 使用 Docker Compose 启动所有服务：
 
 ```bash
-docker-compose up -d || docker compose up -d
+docker compose up -d
 ```
 
 ### 3. 访问应用
