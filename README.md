@@ -21,10 +21,16 @@ AuthCore IAM 是一个基于 Node.js 和 React 的现代化身份与访问管理
 ## 🔐 配置默认账号
 
 系统初始化之前在env环境文件配置超级管理员账号：
+```
+SUPER_ADMIN_USERNAME=admin
+SUPER_ADMIN_EMAIL=you_email
+SUPER_ADMIN_PASSWORD=you_email_password
+SUPER_ADMIN_DISPLAY_NAME=超级管理员
+```
 
-- **用户名**：``
-- **邮箱**：``
-- **密码**：``
+- **用户名**：`SUPER_ADMIN_USERNAME`
+- **邮箱**：`SUPER_ADMIN_EMAIL`
+- **密码**：`SUPER_ADMIN_PASSWORD`
 
 
 ## 🏗️ 系统架构
