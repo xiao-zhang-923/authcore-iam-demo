@@ -94,7 +94,7 @@ cp .env.example .env
 使用 Docker Compose 启动所有服务：
 
 ```bash
-docker-compose up -d || docker compose logs app | grep -i mail
+docker-compose up -d || docker compose up -d
 ```
 
 ### 3. 访问应用
@@ -105,7 +105,7 @@ docker-compose up -d || docker compose logs app | grep -i mail
 ### 4. 停止服务
 
 ```bash
-docker-compose down || docker compose down
+docker compose down
 ```
 
 ## 环境变量说明
@@ -173,7 +173,7 @@ SMTP_FROM=your_email@163.com
 
 ```bash
 # 查看应用容器的环境变量
-docker-compose exec app env | grep -E "(SMTP|DB|JWT)" || docker compose exec app env | grep -E "(SMTP|DB|JWT)"
+docker compose exec app env | grep -E "(SMTP|DB|JWT)"
 ```
 
 ### 验证邮件配置
@@ -181,13 +181,13 @@ docker-compose exec app env | grep -E "(SMTP|DB|JWT)" || docker compose exec app
 #### 方法1：查看容器日志
 ```bash
 # 查看应用容器日志，寻找邮件相关的错误信息
-docker-compose logs app | grep -i mail || docker compose logs app | grep -i mail
+docker compose logs app | grep -i mail
 ```
 
 #### 方法2：进入容器手动测试
 ```bash
 # 进入应用容器
-docker-compose exec app sh
+docker compose exec app sh
 
 # 在容器内查看环境变量
 echo $SMTP_HOST
@@ -244,8 +244,8 @@ nc -zv smtp.163.com 587
 ### 如何确认邮件配置是你自己的
 1. **检查环境变量**：
    ```bash
-   docker-compose exec app env | grep SMTP_USER
-   docker-compose exec app env | grep SMTP_FROM
+   docker compose exec app env | grep SMTP_USER
+   docker compose exec app env | grep SMTP_FROM
    ```
 
 2. **查看 .env 文件**：
@@ -268,15 +268,15 @@ nc -zv smtp.163.com 587
 ### 容器启动失败
 ```bash
 # 查看所有容器状态
-docker-compose ps || docker compose up -d
+docker compose ps 
 
 # 查看特定容器日志
-docker-compose logs app || docker compose logs app
-docker-compose logs mysql || docker compose logs mysql
+docker compose logs app
+docker compose logs mysql
 
 # 重新构建并启动
-docker-compose down || docker compose down
-docker-compose up -d --force-recreate || docker compose up -d --force-recreate
+docker compose down
+docker compose up -d --force-recreate
 ```
 
 
